@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NETnews.Data;
 using NETnews.Data.Services;
+using NETnews.Data.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,8 @@ namespace NETnews {
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnectionString")));
 
             services.AddScoped<INewsService, NewsService>();
+            services.AddScoped<IUserService, UserService>();
+
 
             services.AddControllersWithViews();
         }
