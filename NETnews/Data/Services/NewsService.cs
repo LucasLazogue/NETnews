@@ -15,7 +15,7 @@ namespace NETnews.Data.Services {
         }
 
         public IEnumerable<News> getAll() {
-            return _context.News.ToList();
+            return _context.News.Include(n => n.journalist).ToList();
         }
 
         public Journalist getJournalist(string _name) {
