@@ -7,6 +7,6 @@ namespace NETnews.Data.Services {
         public Journalist getJournalist(string name);
         public void loadNews();
         public void deleteNews(int id);
-
+        public News getNewsById(int newsId);
     }
 }

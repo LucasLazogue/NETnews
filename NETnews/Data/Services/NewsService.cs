@@ -81,5 +81,13 @@ namespace NETnews.Data.Services {
         public void deleteNews(int id) {
             throw new System.NotImplementedException();
         }
+        public News getNewsById(int newsId) {
+            string query = "SELECT * FROM NEWS n WHERE n.id = " + newsId;
+            var dataFromDB = _context.News.FromSqlRaw(query, "id").Include(n => n.journalist).ToList();
+            if (dataFromDB.Any()) 
+                return dataFromDB.First();
+            else
+                throw new NewsNotExistsException("News with Id " + newsId + " does not exists");
+        }
     }
 }

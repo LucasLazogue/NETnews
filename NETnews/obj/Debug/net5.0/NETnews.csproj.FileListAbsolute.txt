@@ -70,3 +70,4 @@ C:\Users\Lucas\source\repos\NETnews\NETnews\obj\Debug\net5.0\NETnews.genruntimec
 C:\Users\Lucas\source\repos\NETnews\NETnews\bin\Debug\net5.0\RestSharp.dll
 C:\Users\Lucas\source\repos\NETnews\NETnews\obj\Debug\net5.0\Razor\Views\News\Index.cshtml.g.cs
 C:\Users\Lucas\source\repos\NETnews\NETnews\obj\Debug\net5.0\Razor\Views\User\Register.cshtml.g.cs
+C:\Users\Lucas\source\repos\NETnews\NETnews\obj\Debug\net5.0\Razor\Views\News\Details.cshtml.g.cs
