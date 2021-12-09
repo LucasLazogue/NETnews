@@ -9,20 +9,26 @@ namespace NETnews.Data {
         public static void Load(IApplicationBuilder applicationBuilder) {
             using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope()) {
                 var context = serviceScope.ServiceProvider.GetService<AppDbContext>();
-
-                if (!context.Persons.Any()) {
-                    context.Persons.AddRange(new List<Person>() {
+                if (!context.Users.Any()) {
+                    context.Users.AddRange(new List<User>() {
                         new User() {
                             name = "admin",
-                            username = "admin",
-                        },
+                            UserName = "admin"
+                        }
+                    });
+                    context.SaveChanges();
+                }
 
+                if (!context.Journalists.Any()) {
+                    context.Journalists.AddRange(new List<Journalist>() {
                         new Journalist() {
                             name = "John Doe"
                         }
                     });
                     context.SaveChanges();
                 }
+
+
             }
         }
     }

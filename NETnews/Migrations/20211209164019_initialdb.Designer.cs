@@ -10,8 +10,8 @@ using NETnews.Data;
 namespace NETnews.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20211209140921_test-id")]
-    partial class testid
+    [Migration("20211209164019_initialdb")]
+    partial class initialdb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -84,6 +84,10 @@ namespace NETnews.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -135,6 +139,8 @@ namespace NETnews.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -222,8 +228,8 @@ namespace NETnews.Migrations
                     b.Property<int>("id")
                         .HasColumnType("int");
 
-                    b.Property<int>("userId")
-                        .HasColumnType("int");
+                    b.Property<string>("userId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("idNews")
                         .HasColumnType("int");
@@ -235,7 +241,24 @@ namespace NETnews.Migrations
 
                     b.HasIndex("idNews");
 
+                    b.HasIndex("userId");
+
                     b.ToTable("NewsComments");
+                });
+
+            modelBuilder.Entity("NETnews.Models.Journalist", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Journalists");
                 });
 
             modelBuilder.Entity("NETnews.Models.News", b =>
@@ -274,40 +297,11 @@ namespace NETnews.Migrations
                     b.ToTable("News");
                 });
 
-            modelBuilder.Entity("NETnews.Models.Person", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("id");
-
-                    b.ToTable("Persons");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Person");
-                });
-
-            modelBuilder.Entity("NETnews.Models.Journalist", b =>
-                {
-                    b.HasBaseType("NETnews.Models.Person");
-
-                    b.HasDiscriminator().HasValue("Journalist");
-                });
-
             modelBuilder.Entity("NETnews.Models.User", b =>
                 {
-                    b.HasBaseType("NETnews.Models.Person");
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.Property<string>("username")
+                    b.Property<string>("name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -367,16 +361,16 @@ namespace NETnews.Migrations
 
             modelBuilder.Entity("NETnews.Models.Comment", b =>
                 {
-                    b.HasOne("NETnews.Models.User", "user")
-                        .WithMany("comments")
-                        .HasForeignKey("id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("NETnews.Models.News", "news")
                         .WithMany("comments")
                         .HasForeignKey("idNews")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("NETnews.Models.User", "user")
+                        .WithMany("comments")
+                        .HasForeignKey("userId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("news");

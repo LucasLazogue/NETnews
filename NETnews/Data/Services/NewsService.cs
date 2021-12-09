@@ -19,14 +19,14 @@ namespace NETnews.Data.Services {
         }
 
         public Journalist getJournalist(string _name) {
-            string query = "SELECT * FROM PERSONS p WHERE p.discriminator = 'Journalist' AND p.name = '" + _name + "'";
-            var dataFromDB = _context.Persons.FromSqlRaw(query, "id").ToList();
+            string query = "SELECT * FROM JOURNALISTS p WHERE p.name = '" + _name + "'";
+            var dataFromDB = _context.Journalists.FromSqlRaw(query, "id").ToList();
             //return _context.Persons.First(c => c.id == dataFromDB.First());
             if (!dataFromDB.Any()) {
                 Journalist journalist = new Journalist() {
                     name = _name,
                 };
-                _context.Persons.Add(journalist);
+                _context.Journalists.Add(journalist);
                 _context.SaveChanges();
                 return journalist;
             }

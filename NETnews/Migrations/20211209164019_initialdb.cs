@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace NETnews.Migrations
 {
-    public partial class testid : Migration
+    public partial class initialdb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -26,6 +26,8 @@ namespace NETnews.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -47,18 +49,16 @@ namespace NETnews.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Persons",
+                name: "Journalists",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    username = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    name = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Persons", x => x.id);
+                    table.PrimaryKey("PK_Journalists", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -185,9 +185,9 @@ namespace NETnews.Migrations
                 {
                     table.PrimaryKey("PK_News", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_News_Persons_journalistId",
+                        name: "FK_News_Journalists_journalistId",
                         column: x => x.journalistId,
-                        principalTable: "Persons",
+                        principalTable: "Journalists",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -197,7 +197,7 @@ namespace NETnews.Migrations
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false),
-                    userId = table.Column<int>(type: "int", nullable: false),
+                    userId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     text = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     idNews = table.Column<int>(type: "int", nullable: false)
                 },
@@ -205,17 +205,17 @@ namespace NETnews.Migrations
                 {
                     table.PrimaryKey("PK_NewsComments", x => new { x.id, x.userId });
                     table.ForeignKey(
+                        name: "FK_NewsComments_AspNetUsers_userId",
+                        column: x => x.userId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_NewsComments_News_idNews",
                         column: x => x.idNews,
                         principalTable: "News",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_NewsComments_Persons_id",
-                        column: x => x.id,
-                        principalTable: "Persons",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -266,6 +266,11 @@ namespace NETnews.Migrations
                 name: "IX_NewsComments_idNews",
                 table: "NewsComments",
                 column: "idNews");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_NewsComments_userId",
+                table: "NewsComments",
+                column: "userId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -298,7 +303,7 @@ namespace NETnews.Migrations
                 name: "News");
 
             migrationBuilder.DropTable(
-                name: "Persons");
+                name: "Journalists");
         }
     }
 }

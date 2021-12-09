@@ -11,35 +11,35 @@ namespace NETnews.Data.Services {
         public UserService(AppDbContext context) {
             _context = context;
         }
-        public User getUserById(int idUser) {
-            string query = "SELECT * FROM PERSONS p WHERE p.discriminator = 'User' AND p.id = " + idUser;
-            var dataFromDB = _context.Persons.FromSqlRaw(query, "id").ToList();
+        public User getUserById(string idUser) {
+            string query = "SELECT * FROM USERS u WHERE u.userId = " + idUser;
+            var dataFromDB = _context.Users.FromSqlRaw(query, "id").ToList();
             if (dataFromDB.Any())
-                return (User)dataFromDB.First();
+                return dataFromDB.First();
             else
                 return null;
         }
 
         public bool usernameExists(string username) {
-            string query = "SELECT * FROM PERSONS p WHERE p.discriminator = 'User' AND p.username = '" + username + "'";
-            var dataFromDB = _context.Persons.FromSqlRaw(query, "id").ToList();
+            string query = "SELECT * FROM USERS p WHERE AND p.username = '" + username + "'";
+            var dataFromDB = _context.Users.FromSqlRaw(query, "id").ToList();
             if (dataFromDB.Any())
                 return true;
             return false;
         }
 
         public void addUser(User user) {
-            if (!usernameExists(user.username)) { 
-                _context.Persons.Add(user);
+            if (!usernameExists(user.UserName)) { 
+                _context.Users.Add(user);
                 _context.SaveChanges();
             }
             else
-                throw new UserExistsException(user.username + " already exists");
+                throw new UserExistsException(user.UserName + " already exists");
         }
 
 
 
-        public void writeComment(int idUser, News news, string comment) {
+        public void writeComment(string idUser, News news, string comment) {
             if (getUserById(idUser) != null) {
                 if (comment.Length != 0) {
                     Comment cmt = new Comment() {

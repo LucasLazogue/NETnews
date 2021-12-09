@@ -1,11 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace NETnews.Models {
-    public class User : Person {
+    public class User : IdentityUser {
 
-        [Required(ErrorMessage = "username is Required")]
-        public string username { get; set; }
+        [Required(ErrorMessage = "name is Required")]
+        public string name { get; set; }
+
         public List<Comment> comments { get; set; } 
     }
 }

@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using NETnews.Data;
 using NETnews.Data.Services;
 using NETnews.Data.Services.Interfaces;
+using NETnews.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,7 @@ namespace NETnews {
 
             //DBCONTEXT CONFIG
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnectionString")));
-            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
+            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
 
 
             services.AddScoped<INewsService, NewsService>();
