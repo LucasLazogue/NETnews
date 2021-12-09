@@ -64,6 +64,7 @@ namespace NETnews {
             });
 
             DbInitializer.Load(app);
+            DbInitializer.loadUsers(app).Wait();
         }
     }
 }

@@ -21,19 +21,15 @@ namespace NETnews.Controllers {
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register([Bind("name, username")] User user) {
+        public async Task<IActionResult> Register([Bind("name, UserName")] User user) {
             if (ModelState.IsValid) {
-                try {
-                    var result = await userManager.CreateAsync(user);
-                    if (result.Succeeded) {
-                        userService.addUser(user);
-                        await signInManager.SignInAsync(user, false);
-                        return RedirectToAction("Index", "News");
-                    }
-                    else
-                        return View(user);
-                } catch (UserExistsException e) {
-                    ViewData["Message"] = e.Message.ToString();
+                var result = await userManager.CreateAsync(user);
+                if (result.Succeeded) {
+                    await signInManager.SignInAsync(user, false);
+                    return RedirectToAction("Index", "News");
+                }
+                else {
+                    ViewData["Message"] = user.UserName + " already exists";
                     return View(user);
                 }
             }

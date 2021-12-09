@@ -12,7 +12,7 @@ namespace NETnews.Data.Services {
             _context = context;
         }
         public User getUserById(string idUser) {
-            string query = "SELECT * FROM USERS u WHERE u.userId = " + idUser;
+            string query = "SELECT * FROM ASPNETUSERS u WHERE u.userId = " + idUser;
             var dataFromDB = _context.Users.FromSqlRaw(query, "id").ToList();
             if (dataFromDB.Any())
                 return dataFromDB.First();
@@ -21,7 +21,7 @@ namespace NETnews.Data.Services {
         }
 
         public bool usernameExists(string username) {
-            string query = "SELECT * FROM USERS p WHERE AND p.username = '" + username + "'";
+            string query = "SELECT * FROM ASPNETUSERS p WHERE p.username = '" + username + "'";
             var dataFromDB = _context.Users.FromSqlRaw(query, "id").ToList();
             if (dataFromDB.Any())
                 return true;
