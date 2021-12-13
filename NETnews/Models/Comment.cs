@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NETnews.Models {
     public class Comment {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key, Column(Order=1)]
         public int id { get; set; } 
         [Key, Column(Order=2)]

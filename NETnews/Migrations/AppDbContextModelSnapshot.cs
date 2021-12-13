@@ -224,7 +224,9 @@ namespace NETnews.Migrations
             modelBuilder.Entity("NETnews.Models.Comment", b =>
                 {
                     b.Property<int>("id")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
 
                     b.Property<string>("userId")
                         .HasColumnType("nvarchar(450)");

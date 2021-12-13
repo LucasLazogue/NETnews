@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using NETnews.Data.Enums;
 using NETnews.Data.Services.Interfaces;
+using NETnews.Data.ViewData;
 using NETnews.Models;
 using System.Threading.Tasks;
 
@@ -24,6 +26,7 @@ namespace NETnews.Controllers {
         public async Task<IActionResult> Register([Bind("name, UserName")] User user) {
             if (ModelState.IsValid) {
                 var result = await userManager.CreateAsync(user);
+                await userManager.AddToRoleAsync(user, UserRoles.User);
                 if (result.Succeeded) {
                     await signInManager.SignInAsync(user, false);
                     return RedirectToAction("Index", "News");
@@ -35,6 +38,33 @@ namespace NETnews.Controllers {
             }
             else
                 return View(user);
+        }
+
+        public IActionResult Login() {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(UserVD user) { 
+            if(ModelState.IsValid) {
+                string name = user.UserName.ToUpper().Normalize();
+                var result = await userManager.FindByNameAsync(user.UserName.ToUpper().Normalize());
+
+                if (result != null) {
+                    await signInManager.SignInAsync(result, false);
+                    return RedirectToAction("Index", "News");
+
+                }
+            }
+            ViewData["message"] = "Wrong Data!";
+            return View(user);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout() { 
+            await signInManager.SignOutAsync();
+            return RedirectToAction("Index", "News");
+        
         }
     }
 }

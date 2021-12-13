@@ -10,8 +10,8 @@ using NETnews.Data;
 namespace NETnews.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20211209164019_initialdb")]
-    partial class initialdb
+    [Migration("20211213175600_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -226,7 +226,9 @@ namespace NETnews.Migrations
             modelBuilder.Entity("NETnews.Models.Comment", b =>
                 {
                     b.Property<int>("id")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
 
                     b.Property<string>("userId")
                         .HasColumnType("nvarchar(450)");

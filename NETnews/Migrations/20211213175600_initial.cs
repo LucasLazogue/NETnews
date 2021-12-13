@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace NETnews.Migrations
 {
-    public partial class initialdb : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -196,7 +196,8 @@ namespace NETnews.Migrations
                 name: "NewsComments",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false),
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     userId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     text = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     idNews = table.Column<int>(type: "int", nullable: false)

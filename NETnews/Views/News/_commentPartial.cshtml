@@ -1,0 +1,15 @@
+﻿@using NETnews.Data.ViewData
+@model CommentVD
+
+@{
+}
+
+<form asp-action="Comment">
+    <input asp-for="idNews" type="hidden" />
+    <input asp-for="idUser" type="hidden" />
+    <input asp-for="text" class="form-control", placeholder="write a comment..." rows="3" />
+    <br>
+    <div class="form-group">
+        <input type="submit" value="Post" class="bi bi-box-arrow-in-right" />
+    </div>
+</form>

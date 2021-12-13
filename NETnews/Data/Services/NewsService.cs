@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NETnews.Data.ViewData;
 using NETnews.Models;
 using RestSharp;
 using System;
@@ -83,11 +84,28 @@ namespace NETnews.Data.Services {
         }
         public News getNewsById(int newsId) {
             string query = "SELECT * FROM NEWS n WHERE n.id = " + newsId;
-            var dataFromDB = _context.News.FromSqlRaw(query, "id").Include(n => n.journalist).ToList();
+            var dataFromDB = _context.News.FromSqlRaw(query, "id").Include(n => n.journalist).Include(c => c.comments).ThenInclude(u => u.user).ToList();
             if (dataFromDB.Any()) 
                 return dataFromDB.First();
             else
                 throw new NewsNotExistsException("News with Id " + newsId + " does not exists");
+        }
+
+        public List<Comment> getComments(int newsId) {
+            string query = "SELECT * FROM NEWSCOMMENTS nc WHERE nc.id = " + newsId;
+            var dataFromDB = _context.NewsComments.FromSqlRaw(query, "id").ToList();
+            return dataFromDB;
+        }
+
+        public void addComment(CommentVD comment) {
+            Comment cmnt = new Comment() {
+                userId = comment.idUser,
+                text = comment.text,
+                idNews = comment.idNews
+            };
+            _context.NewsComments.Add(cmnt);
+            _context.SaveChanges();
+
         }
     }
 }

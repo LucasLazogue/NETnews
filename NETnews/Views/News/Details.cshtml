@@ -1,4 +1,7 @@
-﻿@model News
+﻿@using Microsoft.AspNetCore.Identity
+@using NETnews.Data.ViewData
+@inject UserManager<User> userManager; 
+@model News
 
 @{
     ViewData["Title"] = "Movie details";
@@ -51,57 +54,37 @@
                                             Comment panel
                                         </div>
                                         <div class="panel-body">
-                                            <textarea class="form-control" placeholder="write a comment..." rows="3"></textarea>
-                                            <br>
-                                            <button type="button" class="btn btn-info pull-right">Post</button>
-                                            <div class="clearfix"></div>
-                                            <hr>
-                                            <ul class="media-list">
-                                                <li class="media">
-                                                    <a href="#" class="pull-left">
-                                                        <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle">
-                                                    </a>
-                                                    <div class="media-body">
-                                                        <span class="text-muted pull-right">
-                                                            <small class="text-muted">30 min ago</small>
-                                                        </span>
-                                                        <strong class="text-success">Lucas</strong>
-                                                        <p>
-                                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                                            Lorem ipsum dolor sit amet, <a href="#">#consecteturadipiscing </a>.
-                                                        </p>
-                                                    </div>
-                                                </li>
-                                                <li class="media">
-                                                    <a href="#" class="pull-left">
-                                                        <img src="https://bootdey.com/img/Content/user_2.jpg" alt="" class="img-circle">
-                                                    </a>
-                                                    <div class="media-body">
-                                                        <span class="text-muted pull-right">
-                                                            <small class="text-muted">30 min ago</small>
-                                                        </span>
-                                                        <strong class="text-success">Marcos</strong>
-                                                        <p>
-                                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                                            Lorem ipsum dolor <a href="#">#ipsumdolor </a>adipiscing elit.
-                                                        </p>
-                                                    </div>
-                                                </li>
-                                                <li class="media">
-                                                    <a href="#" class="pull-left">
-                                                        <img src="https://bootdey.com/img/Content/user_3.jpg" alt="" class="img-circle">
-                                                    </a>
-                                                    <div class="media-body">
-                                                        <span class="text-muted pull-right">
-                                                            <small class="text-muted">30 min ago</small>
-                                                        </span>
-                                                        <strong class="text-success">Juan</strong>
-                                                        <p>
-                                                            Lorem ipsum dolor <a href="#">#sitamet</a> sit amet, consectetur adipiscing elit.
-                                                        </p>
-                                                    </div>
-                                                </li>
-                                            </ul>
+                                            @if (User.Identity.IsAuthenticated) {
+                                                await Html.RenderPartialAsync("_commentPartial", new CommentVD { idNews = Model.Id, idUser = @userManager.GetUserId(User) });
+                                            }
+                                            else {
+                                                <div class="col-md-12 alert alert-danger">
+                                                    <span><b>Sorry!</b> - Log in to write comments! </span>
+                                                </div>
+                                            }
+                                            @if (@Model.comments != null && @Model.comments.Any()) {
+                                                <div class="clearfix"></div>
+                                                <hr>
+                                                <ul class="media-list">
+                                                    @foreach (var item in @Model.comments) {
+                                                    <li class="media">
+                                                        <a href="#" class="pull-left">
+                                                            <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle">
+                                                        </a>
+                                                        <div class="media-body">
+                                                            <strong class="text-success">@item.user.name</strong>
+                                                            <p>@item.text</p>
+                                                        </div>
+                                                    </li>
+                                                    <br>
+                                                    }
+                                                </ul>
+                                            }
+                                            else {
+                                                <div class="col-md-12 alert alert-warning">
+                                                    <span>Esta noticia no tiene comentarios, Soyez le premier! </span>
+                                                </div>
+                                            }
                                         </div>
                                     </div>
                                 </div>

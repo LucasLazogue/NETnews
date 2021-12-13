@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NETnews.Data.Services.Interfaces;
 using NETnews.Models;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace NETnews.Data.Services {
@@ -57,6 +58,12 @@ namespace NETnews.Data.Services {
             }
             else
                 throw new UserNotExistsException("Users with id " + idUser + " not exists");
+        }
+
+        public List<Comment> getUserComments(string idUser) {
+            string query = "SELECT nc.id, nc.userId, nc.text, nc.idNews FROM ASPNETUSERS u, NEWSCOMMENTS nc WHERE nc.USERID = " + idUser;
+            var dataFromDB = _context.NewsComments.FromSqlRaw(query, "id, userId, text, idNews").ToList();
+            return dataFromDB;
         }
     }
 }
