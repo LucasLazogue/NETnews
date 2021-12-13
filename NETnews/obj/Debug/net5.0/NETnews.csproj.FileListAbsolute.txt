@@ -67,3 +67,12 @@ C:\Users\Lucas\source\repos\NETnews\NETnews\obj\Debug\net5.0\NETnews.dll
 C:\Users\Lucas\source\repos\NETnews\NETnews\obj\Debug\net5.0\ref\NETnews.dll
 C:\Users\Lucas\source\repos\NETnews\NETnews\obj\Debug\net5.0\NETnews.pdb
 C:\Users\Lucas\source\repos\NETnews\NETnews\obj\Debug\net5.0\NETnews.genruntimeconfig.cache
+C:\Users\Lucas\source\repos\NETnews\NETnews\bin\Debug\net5.0\RestSharp.dll
+C:\Users\Lucas\source\repos\NETnews\NETnews\obj\Debug\net5.0\Razor\Views\News\Index.cshtml.g.cs
+C:\Users\Lucas\source\repos\NETnews\NETnews\obj\Debug\net5.0\Razor\Views\User\Register.cshtml.g.cs
+C:\Users\Lucas\source\repos\NETnews\NETnews\obj\Debug\net5.0\Razor\Views\News\Details.cshtml.g.cs
+C:\Users\Lucas\source\repos\NETnews\NETnews\bin\Debug\net5.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\Lucas\source\repos\NETnews\NETnews\obj\Debug\net5.0\Razor\Views\User\Login.cshtml.g.cs
+C:\Users\Lucas\source\repos\NETnews\NETnews\obj\Debug\net5.0\Razor\Views\Shared\_identity.cshtml.g.cs
+C:\Users\Lucas\source\repos\NETnews\NETnews\obj\Debug\net5.0\Razor\Views\News\_commentPartial.cshtml.g.cs
+C:\Users\Lucas\source\repos\NETnews\NETnews\obj\Debug\net5.0\Razor\Views\User\Details.cshtml.g.cs

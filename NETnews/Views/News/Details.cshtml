@@ -1,0 +1,104 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using NETnews.Data.ViewData
+@inject UserManager<User> userManager; 
+@model News
+
+@{
+    ViewData["Title"] = "Movie details";
+    var msg = ViewData["Message"];
+}
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <div class="card mb-12">
+            <div class="row g-0">
+                @if (msg == null) {
+                    <div class="col-md-12">
+                        <div class="card-header text-white bg-info">
+                            <p class="card-text">
+                                <h5 class="card-title">
+                                    @Model.title
+                                </h5>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <img src="@Model.img" width="100%" alt="">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <p class="card-text">@Model.description</p>
+                            <p class="card-text">
+                                <b>Author: </b>
+                                <a asp-controller="Journalists" asp-action="Details" asp-route-id="@Model.journalistId">
+                                    @Model.journalist.name
+                                </a>
+                            </p>
+                            <p class="card-text">
+                                <b>Source: </b>
+                                <a asp-controller="Journalists" asp-action="SourceDetails" asp-route-id="@Model.source">
+                                    @Model.source
+                                </a>
+                            </p>
+                            <p class="card-text"><b>Date: </b>@Model.date.ToString("dd MMM yy")</p>
+                            <p class="card-text"><b>URL: </b>@Model.url</p>
+
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="row bootstrap snippets bootdeys">
+                            <div class="col-md-8 col-sm-12">
+                                <div class="comment-wrapper">
+                                    <div class="panel panel-info">
+                                        <div class="panel-heading">
+                                            Comment panel
+                                        </div>
+                                        <div class="panel-body">
+                                            @if (User.Identity.IsAuthenticated) {
+                                                await Html.RenderPartialAsync("_commentPartial", new CommentVD { idNews = Model.Id, idUser = @userManager.GetUserId(User) });
+                                            }
+                                            else {
+                                                <div class="col-md-12 alert alert-danger">
+                                                    <span><b>Sorry!</b> - Log in to write comments! </span>
+                                                </div>
+                                            }
+                                            @if (@Model.comments != null && @Model.comments.Any()) {
+                                                <div class="clearfix"></div>
+                                                <hr>
+                                                <ul class="media-list">
+                                                    @foreach (var item in @Model.comments) {
+                                                    <li class="media">
+                                                        <a href="#" class="pull-left">
+                                                            <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle">
+                                                        </a>
+                                                        <div class="media-body">
+                                                            <a class="text-success" asp-controller="User" asp-action="Details" asp-route-id="@item.userId">
+                                                            @item.user.name
+                                                            </a>
+                                                            <p>@item.text</p>
+                                                        </div>
+                                                    </li>
+                                                    <br>
+                                                    }
+                                                </ul>
+                                            }
+                                            else {
+                                                <div class="col-md-12 alert alert-warning">
+                                                    <span>Esta noticia no tiene comentarios, Soyez le premier! </span>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+                else {
+                    <span class="text-danger">@msg</span>
+                }
+            </div>
+        </div>
+    </div>
+</div>

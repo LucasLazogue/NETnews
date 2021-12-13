@@ -3,10 +3,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NETnews.Models {
     public class Comment {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key, Column(Order=1)]
         public int id { get; set; } 
         [Key, Column(Order=2)]
-        public int userId { get; set; }
+        public string userId { get; set; }
         [ForeignKey("userId")]
         public User user { get; set; }
         public string text { get; set; }

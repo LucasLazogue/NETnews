@@ -1,0 +1,14 @@
+﻿@using NETnews.Data.ViewData
+@model UserCommentsVD
+
+@{
+    ViewData["Title"] = "User details";
+    var msg = ViewData["Message"];
+}
+
+<span>@Model.name</span>
+<br>
+@foreach(var item in @Model.comments){
+    <span>@item.text</span>
+    <br>
+}
