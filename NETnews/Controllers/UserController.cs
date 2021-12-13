@@ -66,5 +66,15 @@ namespace NETnews.Controllers {
             return RedirectToAction("Index", "News");
         
         }
+
+        public async Task<IActionResult> Details(string id) {
+            User user = userService.getUserById(id);
+            UserCommentsVD ucVD = new UserCommentsVD(){
+                userId = id,
+                name = user.name,
+                comments = userService.getUserComments(id),
+            };
+            return View(ucVD);
+        }
     }
 }

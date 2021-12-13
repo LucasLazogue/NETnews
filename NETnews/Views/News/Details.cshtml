@@ -72,7 +72,9 @@
                                                             <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle">
                                                         </a>
                                                         <div class="media-body">
-                                                            <strong class="text-success">@item.user.name</strong>
+                                                            <a class="text-success" asp-controller="User" asp-action="Details" asp-route-id="@item.userId">
+                                                            @item.user.name
+                                                            </a>
                                                             <p>@item.text</p>
                                                         </div>
                                                     </li>

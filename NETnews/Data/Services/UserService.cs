@@ -13,7 +13,7 @@ namespace NETnews.Data.Services {
             _context = context;
         }
         public User getUserById(string idUser) {
-            string query = "SELECT * FROM ASPNETUSERS u WHERE u.userId = " + idUser;
+            string query = "SELECT * FROM ASPNETUSERS u WHERE u.id = '" + idUser + "'";
             var dataFromDB = _context.Users.FromSqlRaw(query, "id").ToList();
             if (dataFromDB.Any())
                 return dataFromDB.First();
@@ -61,7 +61,7 @@ namespace NETnews.Data.Services {
         }
 
         public List<Comment> getUserComments(string idUser) {
-            string query = "SELECT nc.id, nc.userId, nc.text, nc.idNews FROM ASPNETUSERS u, NEWSCOMMENTS nc WHERE nc.USERID = " + idUser;
+            string query = "SELECT nc.id, nc.userId, nc.text, nc.idNews FROM ASPNETUSERS u, NEWSCOMMENTS nc WHERE u.id = '" + idUser + "'" + " AND nc.USERID = u.id";
             var dataFromDB = _context.NewsComments.FromSqlRaw(query, "id, userId, text, idNews").ToList();
             return dataFromDB;
         }
