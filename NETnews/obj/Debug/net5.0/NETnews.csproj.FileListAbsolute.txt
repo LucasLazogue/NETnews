@@ -78,3 +78,5 @@ C:\Users\Lucas\source\repos\NETnews\NETnews\obj\Debug\net5.0\Razor\Views\News\_c
 C:\Users\Lucas\source\repos\NETnews\NETnews\obj\Debug\net5.0\Razor\Views\User\Details.cshtml.g.cs
 C:\Users\Lucas\source\repos\NETnews\NETnews\obj\Debug\net5.0\Razor\Views\Journalist\SourceDetails.cshtml.g.cs
 C:\Users\Lucas\source\repos\NETnews\NETnews\obj\Debug\net5.0\Razor\Views\Journalist\journalistDetails.cshtml.g.cs
+C:\Users\Lucas\source\repos\NETnews\NETnews\obj\Debug\net5.0\Razor\Views\User\UserList.cshtml.g.cs
+C:\Users\Lucas\source\repos\NETnews\NETnews\obj\Debug\net5.0\Razor\Views\Journalist\JournalistList.cshtml.g.cs

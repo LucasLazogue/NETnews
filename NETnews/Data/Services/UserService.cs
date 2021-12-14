@@ -12,6 +12,13 @@ namespace NETnews.Data.Services {
         public UserService(AppDbContext context) {
             _context = context;
         }
+
+        public List<User> getUsers() {
+            string query = "SELECT * FROM ASPNETUSERS";
+            var dataFromDB = _context.Users.FromSqlRaw(query, "id").ToList();
+            return dataFromDB;
+        }
+
         public User getUserById(string idUser) {
             string query = "SELECT * FROM ASPNETUSERS u WHERE u.id = '" + idUser + "'";
             var dataFromDB = _context.Users.FromSqlRaw(query, "id").ToList();
