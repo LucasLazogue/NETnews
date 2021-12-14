@@ -33,6 +33,7 @@ namespace NETnews {
 
             services.AddScoped<INewsService, NewsService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IJournalistService, JournalistService>();
 
 
             services.AddControllersWithViews();

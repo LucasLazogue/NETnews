@@ -30,13 +30,13 @@
                             <p class="card-text">@Model.description</p>
                             <p class="card-text">
                                 <b>Author: </b>
-                                <a asp-controller="Journalists" asp-action="Details" asp-route-id="@Model.journalistId">
+                                <a asp-controller="Journalist" asp-action="journalistDetails" asp-route-id="@Model.journalistId">
                                     @Model.journalist.name
                                 </a>
                             </p>
                             <p class="card-text">
                                 <b>Source: </b>
-                                <a asp-controller="Journalists" asp-action="SourceDetails" asp-route-id="@Model.source">
+                                <a asp-controller="Journalist" asp-action="SourceDetails" asp-route-source="@Model.source">
                                     @Model.source
                                 </a>
                             </p>

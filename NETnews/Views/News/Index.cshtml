@@ -27,8 +27,18 @@
                     <div class="col-md-6">
                         <div class="card-body">
                             <p class="card-text">@item.description</p>
-                            <p class="card-text"><b>Source: </b>@item.source</p>
-                            <p class="card-text"><b>Journalist: </b>@item.journalist.name</p>
+                            <p class="card-text">
+                                <b>Source: </b>
+                                <a asp-controller="Journalist" asp-action="SourceDetails" asp-route-source="@item.source">
+                                    @item.source
+                                </a>
+                            </p>
+                            <p class="card-text">
+                                <b>Source: </b>
+                                <a asp-controller="Journalist" asp-action="journalistDetails" asp-route-id="@item.journalist.id">
+                                    @item.journalist.name
+                                </a>
+                            </p>
                             <p class="card-text"><b>Date: </b>@item.date.ToString("dd MMM yy")</p>
                         </div>
                     </div>
