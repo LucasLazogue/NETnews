@@ -26,5 +26,10 @@ namespace NETnews.Controllers {
             List<News> res = journalistService.getNewsByJournalist(id);
             return View(res);
         }
+
+        public IActionResult journalistList() {
+            var res = journalistService.getJournalists();
+            return View(res);
+        }
     }
 }

@@ -14,6 +14,12 @@ namespace NETnews.Data.Services {
             _context = context;
         }
 
+        public List<Journalist> getJournalists() {
+            string query = "SELECT * FROM JOURNALISTS";
+            var dataFromDB = _context.Journalists.FromSqlRaw(query, "id").ToList();
+            return dataFromDB;
+        }
+
         public List<News> getNewsBySource(string source) {
             string query = "SELECT * FROM NEWS n WHERE n.SOURCE = '" + source + "'";
             var dataFromDB = _context.News.FromSqlRaw(query, "id").ToList();

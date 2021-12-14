@@ -4,6 +4,7 @@ using NETnews.Data.Enums;
 using NETnews.Data.Services.Interfaces;
 using NETnews.Data.ViewData;
 using NETnews.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace NETnews.Controllers {
@@ -75,6 +76,11 @@ namespace NETnews.Controllers {
                 comments = userService.getUserComments(id),
             };
             return View(ucVD);
+        }
+
+        public IActionResult userList() {
+            List<User> res = userService.getUsers();
+            return View(res);
         }
     }
 }
